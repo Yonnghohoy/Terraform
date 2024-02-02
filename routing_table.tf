@@ -8,3 +8,10 @@ resource "aws_route_table" "sjh_test_pub_rtb" {
    Name = "sjh_test_pub_rtb"
   }
 }
+
+resource "aws_route_table" "sjh_test_pri_rtb" {
+ vpc_id = aws_vpc.sjh_testvpc.id
+  tags = {
+   Name = "sjh_test_pri_rtb"
+  }
+}
