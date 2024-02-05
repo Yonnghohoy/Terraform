@@ -15,3 +15,4 @@ resource "aws_route_table" "sjh_test_pri_rtb" {
    Name = "sjh_test_pri_rtb"
   }
 }
+
