@@ -22,6 +22,12 @@ resource "aws_instance" "test_instance2" {
   key_name      = "sjh_key"
   subnet_id     = aws_subnet.PRI1-test_subnet.id
   vpc_security_group_ids = [aws_security_group.pri_sg.id]
+  user_data = <<-EOF
+  #/bin/bash
+  apt update
+  apt upgrade -y
+  EOF
+
   tags = {
     Name = "sjh_test_web1"
   }
@@ -33,6 +39,11 @@ resource "aws_instance" "test_instance3" {
   key_name      = "sjh_key"
   subnet_id     = aws_subnet.PRI2-test_subnet.id
   vpc_security_group_ids = [aws_security_group.pri_sg.id]
+  user_data = <<-EOF
+  #/bin/bash
+  apt update
+  apt upgrade -y
+  EOF
   tags = {
     Name = "sjh_test_web2"
   }
