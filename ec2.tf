@@ -5,9 +5,10 @@ resource "aws_instance" "test_instance1" {
   subnet_id     = aws_subnet.PUB-test_subnet.id
   vpc_security_group_ids = [aws_security_group.pub_sg.id]
   associate_public_ip_address = true
+  user_data = <<-EOF
+  #/bin/bash
   apt update
   apt upgrade -y
-  echo "hello world" > /var/www/html/index.html
   EOF
 
   tags = {
