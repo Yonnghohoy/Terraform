@@ -26,8 +26,7 @@ resource "aws_instance" "test_instance2" {
   apt update
   apt upgrade -y
   apt-get install apache2 -y
-  apt update
-  apt upgrade -y
+  systemctl enable apache2
   EOF
   tags = {
     Name = "sjh_test_web1"
