@@ -9,7 +9,7 @@ resource "aws_instance" "pub1"{
  #!/bin/bash
  apt update
  apt upgrade -y
- apt-get install apache2
+ apt-get install -y apache2
  systemctl enable apache2
  echo "hello world1" > /var/www/html/index.html
  EOF
@@ -29,7 +29,7 @@ resource "aws_instance" "pub2"{
  #!/bin/bash
  apt update
  apt upgrade -y
- apt-get install apache2
+ apt-get install -y apache2
  systemctl enable apache2
  echo "hello world2" > /var/www/html/index.html
  EOF
