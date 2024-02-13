@@ -36,3 +36,8 @@ resource "aws_route_table_association" "pri1-association" {
  subnet_id = aws_subnet.pri1-sub.id
  route_table_id = aws_route_table.pri-rtb.id
 }
+
+resource "aws_route_table_association" "pri2-association" {
+ subnet_id = aws_subnet.pri2-sub.id
+ route_table_id = aws_route_table.pri-rtb.id
+}
