@@ -16,4 +16,13 @@ resource "aws_subnet" "pub2-sub" {
  }
 }
 
+resource "aws_subnet" "pri1-sub" {
+ vpc_id = aws_vpc.vpc.id
+ cidr_block = "10.10.3.0/24"
+ availability_zone = "ap-northeast-2a"
+ tags = {
+  Name = "sjh-pri1"
+ }
+}
+
 

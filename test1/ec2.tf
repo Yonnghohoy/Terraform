@@ -14,3 +14,19 @@ resource "aws_instance" "bastion" {
   Name = "sjh-bastion"
  }
 }
+
+resource "aws_instance" "web1" {
+ ami = "ami-0f3a440bbcff3d043"
+ instance_type = "t2.micro"
+ key_name = "sjh_key"
+ subnet_id = aws_subnet.pri1-sub.id
+ vpc_security_group_ids = [aws_security_group.web-sg.id]
+ user_data = <<-EOF
+ #!/bin/bash
+ apt update
+ apt upgrade -y
+ EOF
+ tags = {
+  Name = "sjh-web1"
+ }
+}
