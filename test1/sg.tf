@@ -1,7 +1,7 @@
 resource "aws_security_group" "bastion-sg" {
  vpc_id = aws_vpc.vpc.id
  name = "bastion-sg"
- description = "bastion-ssg"
+ description = "bastion-sg"
  tags = {
   Name = "sjh-bastion-sg"
  }
@@ -19,6 +19,26 @@ resource "aws_security_group" "bastion-sg" {
   }
 }
 
+resource "aws_security_group" "alb-sg" {
+ vpc_id = aws_vpc.vpc.id
+ name = "alb-sg"
+ description = "alb-sg"
+ tags = {
+  Name = "sjh-alb-sg"
+ }
+ ingress {
+  from_port = 80
+  to_port = 80
+  protocol = "TCP"
+  cidr_blocks = ["211.115.223.215/32"]
+  }
+ egress {
+  from_port = 0
+  to_port = 0
+  protocol = "-1"
+  cidr_blocks = ["0.0.0.0/0"]
+  }
+}
 
 resource "aws_security_group" "web-sg" {
  vpc_id = aws_vpc.vpc.id
@@ -43,7 +63,7 @@ resource "aws_security_group" "web-sg" {
   from_port = 80
   to_port = 80
   protocol = "TCP"
-  cidr_blocks = ["0.0.0.0/0"]
+  security_groups = [aws_security_group.alb-sg.id]
   }
  egress {
   from_port = 0
