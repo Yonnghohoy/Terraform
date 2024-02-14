@@ -24,7 +24,7 @@ resource "aws_alb_target_group" "alb-tg" {
   }
 }
 
-resource "aws_alb_listener" "alb-listen" {
+resource "aws_alb_listener" "http-listener" {
   load_balancer_arn = aws_alb.alb.arn
   port = 80
   protocol = "HTTP"
@@ -32,8 +32,9 @@ resource "aws_alb_listener" "alb-listen" {
  default_action {
   type = "forward"
   target_group_arn = aws_alb_target_group.alb-tg.arn
-  }
+ }
 }
+
 
 resource "aws_alb_target_group_attachment" "attache-web1" {
  target_group_arn = aws_alb_target_group.alb-tg.arn
