@@ -4,7 +4,7 @@ resource "aws_route53_zone" "hollyjunho" {
 
 resource "aws_route53_record" "rt53" {
  zone_id = aws_route53_zone.hollyjunho.zone_id
- name = "www"
+ name = ""
  type = "A"
  alias {
   name = aws_alb.alb.dns_name
