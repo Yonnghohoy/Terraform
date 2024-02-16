@@ -32,6 +32,13 @@ resource "aws_security_group" "alb-sg" {
   protocol = "TCP"
   cidr_blocks = ["211.115.223.215/32"]
   }
+ ingress {
+  from_port = 443
+  to_port = 443
+  protocol = "TCP"
+  cidr_blocks = ["211.115.223.215/32"]
+  }
+
  egress {
   from_port = 0
   to_port = 0
@@ -65,6 +72,13 @@ resource "aws_security_group" "web-sg" {
   protocol = "TCP"
   security_groups = [aws_security_group.alb-sg.id]
   }
+ ingress {
+  from_port = 443
+  to_port = 443
+  protocol = "TCP"
+  security_groups = [aws_security_group.alb-sg.id]
+  }
+
  egress {
   from_port = 0
   to_port = 0
