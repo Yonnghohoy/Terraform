@@ -1,8 +1,5 @@
 resource "aws_vpc" "vpc" {
   cidr_block	= var.vpc_cidr_block
-  tags = {
-    Name = "${var.name}_vpc"
-  }
 }
 
 resource "aws_subnet" "sjh-public" {

@@ -10,3 +10,6 @@ output "private_subnet_id" {
   value = aws_subnet.sjh-private.id
 }
 
+output "vpc_name" {
+  value = var.name
+}
