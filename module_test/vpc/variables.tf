@@ -12,4 +12,5 @@ variable "private_subnet_cidr_block" {
 
 variable "name" {
   type = string
+  default = "sjh"
 }
