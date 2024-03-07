@@ -13,9 +13,7 @@ provider "aws" {
 
 module "vpc" {
   source = "./vpc"
-  vpc_cidr_block = "10.0.0.0/16"
-  name = "sjh-vpc"
-  public_subnet_cidr_block = "10.0.0.0/24"
-  private_subnet_cidr_block = "10.0.1.0/24"
+  vpc_cidr_block = var.vpc_cidr_block
+  public_subnets = var.public_subnet_ids
 }
 
