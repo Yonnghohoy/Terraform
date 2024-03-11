@@ -17,3 +17,6 @@ module "vpc" {
  # public_subnets = var.public_subnet_ids
 }
 
+module "ec2" {
+  source = "./ec2"
+}
