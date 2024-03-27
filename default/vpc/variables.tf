@@ -20,4 +20,17 @@ variable "public_subnets" {
   }
 }
 
+variable "private_subnets" {
+  type = map
+  default = {
+    pri-sub-1 = {
+      az = "ap-northeast-2a"
+      cidr = "10.0.10.0/24"
+    }
+    pri-sub-2 = {
+      az = "ap-northeast-2c"
+      cidr = "10.0.11.0/24"
+    }
+  }
+}
 
