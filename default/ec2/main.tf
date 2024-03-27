@@ -6,7 +6,7 @@ resource "aws_instance" "public" {
   associate_public_ip_address = true
 
   tags = {
-    Name = "${var.name}-pub-${count.index}"
+    Name = "${var.name}-pub-${count.index+1}"
   }
 }
 
@@ -17,6 +17,6 @@ resource "aws_instance" "private" {
   subnet_id = var.private_subnet_ids[count.index]
 
   tags = {
-    Name = "${var.name}-pri-${count.index}"
+    Name = "${var.name}-pri-${count.index+1}"
   }
 }
