@@ -1,6 +1,7 @@
 locals {
   public_sg = format("%s-%s-sg", var.name, "bastion")
   private_sg = format("%s-%s-sg", var.name, "private")
+  web_lb_sg = format("%s-%s-sg", var.name, "web-lb")
 }
 
 
@@ -56,3 +57,30 @@ resource "aws_security_group_rule" "allow_bastion_ssh" {
   security_group_id = aws_security_group.private.id
 }
 
+################ LB SG ##################
+resource "aws_security_group" "web_lb_sg" {
+  name		= local.web_lb_sg
+  description	= "${var.name} external LB SG"
+  vpc_id 	= var.vpc_id
+
+  ingress {
+	from_port	= 80
+	to_port		= 80
+	protocol	= "tpc"
+	cidr_blocks	= ["0.0.0.0/0"]
+  }
+
+  ingress {
+        from_port       = 443
+        to_port         = 443
+        protocol        = "tpc"
+        cidr_blocks     = ["0.0.0.0/0"]
+  }
+
+   egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
