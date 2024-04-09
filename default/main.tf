@@ -17,10 +17,10 @@ module "vpc" {
 
 module "ec2" {
   source = "./ec2"
-  public_subnet_ids = module.vpc.public_subnet_ids
-  private_subnet_ids = module.vpc.private_subnet_ids
-  security_group_id_bastion = module.sg.security_group_id_bastion
-  security_group_id_private = module.sg.security_group_id_private
+  public_subnet_ids	 = module.vpc.public_subnet_ids
+  private_subnet_ids	 = module.vpc.private_subnet_ids
+  security_group_id_bastion	 = module.sg.security_group_id_bastion
+  security_group_id_private 	= module.sg.security_group_id_private
 }
 
 module "sg" {
