@@ -9,6 +9,22 @@ resource "aws_instance" "public" {
   tags = {
     Name = "${var.name}-pub-bastion"
   }
+  user_data = <<-EOF
+    #!/bin/bash
+    sed -i 's/#PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
+    sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+    useradd sjh
+    echo "sjaksahffk." | passwd sjh --stdin
+    usermod -aG wheelsjh
+    systemctl restart sshd
+    apt update -y
+  EOF
+
+  root_block_device {
+    volume_size		= 8
+    volume_type		= "gp3"
+    delete_on_termination = true
+  }
 }
 
 resource "aws_instance" "private" {
