@@ -11,6 +11,11 @@ provider "aws" {
   region = "ap-northeast-2"
 }
 
+provider "aws" {
+  region = "us-east-1"
+  alias = "virginia"
+}
+
 module "vpc" {
   source = "./vpc"
 }
@@ -34,6 +39,7 @@ module "lb" {
   security_group_id_web_sg = module.sg.security_group_id_web_sg
   vpc_id = module.vpc.vpc_id
   web_ids = module.ec2.web_ids
+  acm_arn = module.route53.acm_arn
 }
 
 module "route53" {
