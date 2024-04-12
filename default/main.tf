@@ -28,3 +28,10 @@ module "sg" {
   vpc_id = module.vpc.vpc_id
 }
 
+module "lb" {
+  source = "./lb"
+  public_subnet_ids = module.vpc.public_subnet_ids
+  security_group_id_web_sg = module.sg.security_group_id_web_sg
+  vpc_id = module.vpc.vpc_id
+}
+
