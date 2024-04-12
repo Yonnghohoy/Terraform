@@ -53,7 +53,7 @@ resource "aws_instance" "private" {
     apt install -y nginx
     systemctl enable nginx --now
     systemctl status nginx --no-pager
-    echo "<h1>Instance IP: $(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)</h1>" > /var/www/html/index.html
+    echo "test-page" > /var/www/html/index.html
     echo "Nginx installation completed."
     apt install -y mysql
   EOF
