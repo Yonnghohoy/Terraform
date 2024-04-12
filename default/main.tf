@@ -36,3 +36,10 @@ module "lb" {
   web_ids = module.ec2.web_ids
 }
 
+module "route53" {
+  source	= "./route53"
+  lb_zone_id 	= module.lb.zone_id
+  name 		= var.name 
+  lb_dns_name	= module.lb.lb_dns_name
+}
+
