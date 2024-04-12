@@ -11,13 +11,14 @@ resource "aws_instance" "public" {
   }
   user_data = <<-EOF
     #!/bin/bash
-    sed -i 's/#PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
-    sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+    sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin no/g' /etc/ssh/sshd_config
+    sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/g' /etc/ssh/sshd_config
     useradd sjh
-    echo "sjaksahffk." | passwd sjh --stdin
-    usermod -aG wheelsjh
+    echo "sjh:sjaksahffk." | sudo chpasswd
+    usermod -aG sudo sjh
     systemctl restart sshd
     apt update -y
+    apt upgrade -y
   EOF
 
   root_block_device {
