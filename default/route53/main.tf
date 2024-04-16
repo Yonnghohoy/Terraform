@@ -27,7 +27,7 @@ resource "aws_route53_record" "record" {
 ################ Create CF ACM # ################
 #resource "aws_acm_certificate" "hollyjunho_cf_acm" {
 #  provider		 = aws.virginia
-#  domain_name		 = "*.hollyjuho.store"
+#  domain_name		 = "*.hollyjunho.store"
 #  validation_method	 = "DNS"
 #  lifecycle {
 #    create_before_destroy = true
@@ -82,6 +82,7 @@ resource "aws_route53_record" "cert_record" {
       type	= dvo.resource_record_type
     }
   }
+
   name			 = each.value.name
   allow_overwrite	 = true
   records		 = [each.value.record]
