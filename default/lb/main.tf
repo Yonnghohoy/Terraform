@@ -13,14 +13,14 @@ resource "aws_lb" "web_lb" {
 ############ ALB Listener ############
 resource "aws_lb_listener" "http" {
   load_balancer_arn	= aws_lb.web_lb.arn
-  port 			= 80
-  protocol		= "HTTP"
+  port 			= var.web_lb_listener_port_http
+  protocol		= var.web_lb_listener_protocol_http
   
   default_action {
     type		= "redirect"
     redirect {
-      port 		= "443"
-      protocol		= "HTTPS"
+      port 		= var.web_lb_listener_port_https
+      protocol		= var.web_lb_listener_protocol_https
       status_code	= "HTTP_301"
     }
   }
@@ -28,8 +28,8 @@ resource "aws_lb_listener" "http" {
 
 resource "aws_lb_listener" "https" {
   load_balancer_arn	= aws_lb.web_lb.arn
-  port			= 443
-  protocol		= "HTTPS"
+  port			= var.web_lb_listener_port_https
+  protocol		= var.web_lb_listener_protocol_https
   certificate_arn 	= var.acm_arn
   
   default_action {
@@ -44,8 +44,8 @@ resource "aws_lb_listener" "https" {
 ############ ALB target Group  ############
 resource "aws_lb_target_group" "alb-tg" {
   name                  = format("%s-web-lb-tg",var.name)
-  port			= 80
-  protocol		= "HTTP"
+  port			= var.web_lb_tg_port
+  protocol		= var.web_lb_tg_protocol
   vpc_id		= var.vpc_id 
   target_type		= "instance"
 
