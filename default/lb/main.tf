@@ -18,11 +18,8 @@ resource "aws_lb_listener" "https_redirect" {
   default_action {
     type		= "redirect"
     redirect {
-      host	= "#{host}"
-      path	= "/#{path}"
-      port	= "443"
-      protocol	= "HTTPS"
-      query	= "#{query}"
+      port = "443"
+      protocol = "HTTPS"
       status_code = "HTTP_301"
     }
   }
@@ -39,6 +36,8 @@ resource "aws_lb_listener" "HTTPS_listener" {
     type = "forward"
     target_group_arn	= aws_lb_target_group.alb-tg.arn
   }
+  
+  depends_on = [var.acm_arn, var.acm_validation]
 }
 
 

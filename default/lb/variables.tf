@@ -14,3 +14,4 @@ variable "web_ids" {}
 
 variable "acm_arn" {}
 
+variable "acm_validation" {}
