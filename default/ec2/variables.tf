@@ -20,3 +20,7 @@ variable "security_group_id_bastion" {}
 
 variable "security_group_id_private" {}
 
+variable "security_group_id_web_sg" {}
+
+variable "alb_tg_arn" {}
+
