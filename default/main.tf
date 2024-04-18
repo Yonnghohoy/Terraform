@@ -26,6 +26,8 @@ module "ec2" {
   private_subnet_ids	 = module.vpc.private_subnet_ids
   security_group_id_bastion	 = module.sg.security_group_id_bastion
   security_group_id_private 	= module.sg.security_group_id_private
+  security_group_id_web_sg	= module.sg_security_group_id_web_sg
+  alb_tg_arn			= module.lb.alb_tg_arn
 }
 
 module "sg" {
