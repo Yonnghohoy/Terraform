@@ -10,7 +10,7 @@ variable "security_group_id_web_sg" {}
 
 variable "vpc_id" {}
 
-variable "web_ids" {}
+#variable "web_ids" {}
 
 variable "acm_arn" {}
 
