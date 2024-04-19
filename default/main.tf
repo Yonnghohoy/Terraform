@@ -26,7 +26,6 @@ module "ec2" {
   private_subnet_ids	 = module.vpc.private_subnet_ids
   security_group_id_bastion	 = module.sg.security_group_id_bastion
   security_group_id_private 	= module.sg.security_group_id_private
-  security_group_id_web_sg	= module.sg_security_group_id_web_sg
   alb_tg_arn			= module.lb.alb_tg_arn
 }
 
@@ -40,7 +39,7 @@ module "lb" {
   public_subnet_ids = module.vpc.public_subnet_ids
   security_group_id_web_sg = module.sg.security_group_id_web_sg
   vpc_id = module.vpc.vpc_id
-  web_ids = module.ec2.web_ids
+  #web_ids = module.ec2.web_ids
   acm_arn = module.route53.acm_arn
   acm_validation = module.route53.acm_validation
 }
