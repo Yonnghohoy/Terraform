@@ -34,4 +34,16 @@ variable "private_subnets" {
   }
 }
 
-
+variable "rds_subnets" {
+  type = map
+  default = {
+    pri-rds-sub-1 = {
+      az = "ap-northeast-2a"
+      cidr = "10.0.20.0/24"
+    }
+    pri-rds-sub-2 = {
+      az = "ap-northeast-2c"
+      cidr = "10.0.21.0/24"
+    }
+  }
+}

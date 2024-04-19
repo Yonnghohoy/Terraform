@@ -1,3 +1,4 @@
+############## VPC ###############
 resource "aws_vpc" "main" {
   cidr_block = var.vpc_cidr_block
   tags = {
@@ -5,6 +6,7 @@ resource "aws_vpc" "main" {
   }
 }
 
+########## Public Subnet #########
 resource "aws_subnet" "public_subnets" {
   for_each = var.public_subnets
   
@@ -17,6 +19,7 @@ resource "aws_subnet" "public_subnets" {
   }
 }
 
+########## Private Subnet ############
 resource "aws_subnet" "private_subnets" {
   for_each = var.private_subnets
 
@@ -29,6 +32,19 @@ resource "aws_subnet" "private_subnets" {
   }
 }
 
+resource "aws_subnet" "rds_subnets" {
+  for_each = var.rds_subnets
+
+  availability_zone = each.value["az"]
+  cidr_block = each.value["cidr"]
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "${var.name}-${each.key}"
+  }
+}
+
+################# IGW ###################
 resource "aws_internet_gateway" "main" {
   vpc_id = aws_vpc.main.id
 
@@ -37,7 +53,7 @@ resource "aws_internet_gateway" "main" {
   }
 }
 
-################### RTB ######################
+################### Public RTB ######################
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
   route {
@@ -50,6 +66,7 @@ resource "aws_route_table" "public" {
   }
 }
 
+################### Private RTB ######################
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.main.id
   route {
@@ -58,10 +75,22 @@ resource "aws_route_table" "private" {
   }
 
   tags = {
-    Name = "${var.name}-pir-rtb"
+    Name = "${var.name}-pri-rtb"
   }
 }
 
+################### RDS RTB ######################
+resource "aws_route_table" "rds" {
+  vpc_id = aws_vpc.main.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat_gw.id
+  }
+
+  tags = {
+    Name = "${var.name}-pri-rds-rtb"
+  }
+}
 
 ############# Association #############
 resource "aws_route_table_association" "public" {
@@ -76,6 +105,13 @@ resource "aws_route_table_association" "private" {
 
   subnet_id = each.value.id
   route_table_id = aws_route_table.private.id
+}
+
+resource "aws_route_table_association" "rds" {
+  for_each = aws_subnet.rds_subnets
+
+  subnet_id = each.value.id
+  route_table_id = aws_route_table.rds.id
 }
 
 ########### NAT #############
