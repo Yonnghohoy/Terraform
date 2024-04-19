@@ -37,7 +37,7 @@ resource "aws_launch_configuration" "config" {
   name_prefix		= "sjh-launchconfig"
   image_id		= data.aws_ami.ubuntu.id
   instance_type		= var.instance_type
-  security_groups	= [var.security_group_id_web_sg]
+  security_groups	= [var.security_group_id_private]
   key_name		= aws_key_pair.key_pair.key_name
 
   user_data = <<-EOF
@@ -75,7 +75,7 @@ resource "aws_autoscaling_group" "sjh_asg" {
   launch_configuration	= aws_launch_configuration.config.name
   vpc_zone_identifier	= [var.private_subnet_ids[0], var.private_subnet_ids[1]]
 
-  health_check_type	= "ALB"
+  health_check_type	= "ELB"
   health_check_grace_period	= 1800
   target_group_arns	= [var.alb_tg_arn]
 
@@ -85,7 +85,7 @@ resource "aws_autoscaling_group" "sjh_asg" {
 
   tag {
     key			= "Name"
-    value		= format("%s-ash", var.name)
+    value		= format("%s-asg-web", var.name)
     propagate_at_launch = true
   }
 }

@@ -1,4 +1,4 @@
-output "web_ids" {
-  value = aws_instance.private[*].id
-}
+#output "web_ids" {
+#  value = aws_instance.private[*].id
+#}
 
