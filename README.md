@@ -43,3 +43,34 @@ Module
 자식 모듈은 루트 모듈 또는 다른 자식 모듈에서 호출되어 사용되는 모듈이며, 단일 기능을 수행하고, 보통 특정 리소스나 서비스에 대한 정의를 포함합니다.
 모듈을 모듈화함으로써 코드의 재사용성을 높일 수 있으며, 자식 모듈은 특정 리소스나 서비스를 구성하는 일반적인 패턴을 캡슐화하고 코드의 중복을 줄이는 데 사용됩니다.
 자식 모듈은 source 매개변수를 사용하여 호출됩니다. 이 매개변수에는 모듈의 경로(상대 경로 또는 URL)가 포함됩니다.
+
+
+모듈통신의 흐름
+-----
+- 모듈통신의 예는 아래와 같습니다.
+- 예를 들어 EC2생성시 VPC의 Subnet이 필요합니다. EC2모듈은 VPC모듈에서 생성된 Subnet값을 참고하기위해 VPC모듈의 outputs.tf에서 출력된 subnet값을 받아와야합니다.
+1. VPC모듈에서 생성된 subnet값의 ID를 VPC모듈의 outputs.tf 파일로 말 그대로 Out시킨다 (밖으로 보낸다)
+
+<VPC모듈>
+output "aws_subnet_id" {
+  value = aws_subnet.subnet.id
+}
+
+2. EC2모듈은 VPC모듈이 OUT시킨 값을 가져오기 위해 속 빈 껍데기를 variables.tf에 만든다. EC2를 생성하기 위한 필요한 객체인 subnet_id의 값은 variables.tf의 subnet_id를 참조하게 한다.
+<EC2모듈의 variables.tf>
+variable "subnet_id"{}
+
+<EC2모듈의 maint.tf>
+...
+...
+subnet_id = var.subnet_id
+
+
+3. Root 모듈에서 EC2모듈을 호출하며 VPC Module을 참조하게 한다. 이때 VPC모듈에서 OUT 시킨 값의 이름을 참조하게 해야한다. "aws_subnet_id"
+<Root모듈>
+module "ec2" {
+  ...
+   ...
+   ..
+  subnet_id = module.vpc.aws_subnet_id
+}
