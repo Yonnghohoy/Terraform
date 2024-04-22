@@ -7,7 +7,7 @@ resource "aws_kms_key" "kms_db_key" {
 resource "random_password" "password" {
   length		= 16
   special		= true
-  override_special	= "_%@"
+  override_special	= "!#$%&()*+,-./:;=?@[]^_{}"
 }
 
 # Creating a Secret for DB Master account
@@ -19,10 +19,10 @@ resource "aws_secretsmanager_secret" "sjh_db_secret" {
 
 # Creating a secret versions for DB Master account
 resource "aws_secretsmanager_secret_version" "sjh_db_secret_version" {
-  secret_id	= aws_secretsmanager_secret.sjh_db_secret.id
+  secret_id    = aws_secretsmanager_secret.sjh_db_secret.id
   secret_string = jsonencode(
     {
-      password = randome_password.password.result
+      password = random_password.password.result
     }
   )
 }
@@ -65,7 +65,7 @@ resource "aws_db_subnet_group" "db-subnet-group" {
 
 # RDS Cluster
 resource "aws_rds_cluster" "aurora-mysql-db" {
-  cluster_identifier		 = format("%s-db",var.name)
+  cluster_identifier		 = format("%s-db",lower(var.name))
   engine_mode			 = var.engine_mode
   db_subnet_group_name		 = aws_db_subnet_group.db-subnet-group.name
   vpc_security_group_ids	 = [var.rds_security_group_ids]
@@ -91,7 +91,7 @@ resource "aws_rds_cluster" "aurora-mysql-db" {
 resource "aws_rds_cluster_instance" "aurora_mysql_db-instance" {
   count		= 2
   identifier 	= format("%s-db-${count.index}",var.name)
-  cluster_identifier = aws_rds_cluster.aurora_mysql_db.id
+  cluster_identifier = aws_rds_cluster.aurora-mysql-db.id
   instance_class = var.instance_class
   engine	= var.engine
   engine_version = var.engine_version
