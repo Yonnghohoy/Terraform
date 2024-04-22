@@ -3,12 +3,14 @@ variable "name" {}
 variable "rds_subnets_ids" {}
 
 variable "engine_mode" {
-  default = "aurora-mysql"
+  default = "provisioned"
 }
 
 variable "rds_security_group_ids" {}
 
-variable "engine" {}
+variable "engine" {
+  default = "aurora-mysql"
+}
 
 variable "engine_version" {
   default = "8.0.mysql_aurora.3.04.1"
