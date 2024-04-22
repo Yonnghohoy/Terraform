@@ -8,3 +8,7 @@ output "public_subnet_ids" {
 output "private_subnet_ids" {
   value = values(aws_subnet.private_subnets)[*].id
 }
+
+output "rds_subnet_ids" {
+  value = values(aws_subnet.rds_subnets)[*].id
+}
