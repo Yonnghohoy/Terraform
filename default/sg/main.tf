@@ -106,7 +106,7 @@ resource "aws_security_group" "web_lb_sg" {
 resource "aws_security_group" "rds" {
   name		= format("%s-rds-sg",var.name)
   description	= "rds security group for ${var.name}"
-  vpc_id	= vpc_id
+  vpc_id	= var.vpc_id
 
   egress {
     from_port 	= 0
