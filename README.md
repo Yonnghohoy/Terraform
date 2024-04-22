@@ -68,6 +68,7 @@ subnet_id = var.subnet_id
 
 3. Root 모듈에서 EC2모듈을 호출하며 VPC Module을 참조하게 한다. 이때 VPC모듈에서 OUT 시킨 값의 이름을 참조하게 해야한다. "aws_subnet_id"
 <Root모듈>
+
 module "ec2" {
   ...
    ...
