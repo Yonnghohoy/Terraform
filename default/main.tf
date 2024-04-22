@@ -55,6 +55,6 @@ module "rds" {
   source = "./rds"
   name = var.name
 
-  rds_subnets_ids 	= module.vpc.rds_subnet_id
-  rds_security_group_ids = moudle.sg.security_group_id_rds.i
+  rds_subnets_ids 	= module.vpc.rds_subnet_ids
+  rds_security_group_ids = module.sg.security_group_id_rds
 }
