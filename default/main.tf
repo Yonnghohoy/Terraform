@@ -51,3 +51,10 @@ module "route53" {
   lb_dns_name	= module.lb.lb_dns_name
 }
 
+module "rds" {
+  source = "./rds"
+  name = var.name
+
+  rds_subnets_ids 	= module.vpc.rds_subnet_id
+  rds_security_group_ids = moudle.sg.security_group_id_rds.i
+}
