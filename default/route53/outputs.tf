@@ -1,5 +1,5 @@
 output "acm_arn" {
-  value = aws_acm_certificate.hollyjunho_acm.arn
+  value = aws_acm_certificate.junho-tech_acm.arn
 }
 
 output "acm_validation" {
